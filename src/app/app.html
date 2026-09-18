@@ -1,0 +1,46 @@
+<div class="app-layout">
+
+  <app-sidebar
+    [isOpen]="sidebarOpen"
+    (menuClose)="closeSidebar()">
+  </app-sidebar>
+
+  <main class="main-content">
+
+    <header class="top-header">
+
+      <button
+        class="menu-button"
+        (click)="openSidebar()">
+        ☰
+      </button>
+
+      <div class="page-title">
+        <h1>Dashboard</h1>
+        <p>Fire Safety Management System</p>
+      </div>
+
+      <div class="header-actions">
+
+        <button class="header-button">
+          🔔
+          <span class="notification-dot"></span>
+        </button>
+
+        <div class="header-avatar">
+          G
+        </div>
+
+      </div>
+
+    </header>
+
+   <section class="page-content">
+
+    <router-outlet></router-outlet>
+
+  </section>
+
+  </main>
+
+</div>

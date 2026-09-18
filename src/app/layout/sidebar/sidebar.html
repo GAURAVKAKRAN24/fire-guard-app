@@ -1,0 +1,84 @@
+<aside class="sidebar" [class.mobile-open]="isOpen">
+
+  <button
+    class="mobile-close"
+    (click)="closeMenu()">
+    ✕
+  </button>
+
+  <div class="brand">
+    <div class="brand-icon">🔥</div>
+
+    <div class="brand-text">
+      <span class="brand-name">FireSafe</span>
+      <span class="brand-subtitle">Management System</span>
+    </div>
+  </div>
+
+  <nav class="navigation">
+
+    <div class="nav-section" (click)="closeMenu()">
+      <span class="section-title">MAIN</span>
+
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">▦</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a routerLink="/customers" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">👥</span>
+        <span>Customers</span>
+      </a>
+
+      <a class="nav-item" routerLink="/customers">
+        <span class="nav-icon">🧯</span>
+        <span>Extinguishers</span>
+      </a>
+
+      <a class="nav-item">
+        <span class="nav-icon">🔧</span>
+        <span>Services</span>
+      </a>
+
+    </div>
+
+    <div class="nav-section" (click)="closeMenu()">
+
+      <span class="section-title">MANAGEMENT</span>
+
+      <a class="nav-item">
+        <span class="nav-icon">🔔</span>
+        <span>Notifications</span>
+
+        <span class="notification-badge">3</span>
+      </a>
+
+    </div>
+
+  </nav>
+
+  <div class="sidebar-footer">
+
+    <a class="nav-item" (click)="closeMenu()">
+      <span class="nav-icon">⚙️</span>
+      <span>Settings</span>
+    </a>
+
+    <div class="user-card">
+
+      <div class="avatar">
+        G
+      </div>
+
+      <div class="user-info">
+        <strong>Gaurav</strong>
+        <span>Administrator</span>
+      </div>
+
+      <button class="more-button">⋮</button>
+
+    </div>
+
+  </div>
+
+</aside>

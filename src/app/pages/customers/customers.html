@@ -1,0 +1,314 @@
+<div class="customer-page">
+
+  <!-- Page Header -->
+
+  <div class="page-heading">
+
+    <div>
+
+      <span class="eyebrow">CUSTOMERS</span>
+
+      @if (showForm) {
+
+        <h1>Add Customer</h1>
+
+        <p>
+          Add a new customer to your fire safety system.
+        </p>
+
+      } @else {
+
+        <h1>Customers</h1>
+
+        <p>
+          Manage your fire safety customers.
+        </p>
+
+      }
+
+    </div>
+
+
+    @if (!showForm) {
+
+      <button
+        class="add-button"
+        (click)="addCustomer()">
+
+        <span>+</span>
+
+        Add Customer
+
+      </button>
+
+    } @else {
+
+      <button
+        class="cancel-button"
+        (click)="cancelAddCustomer()">
+
+        Cancel
+
+      </button>
+
+    }
+
+  </div>
+
+
+  <!-- Customer List -->
+
+  @if (!showForm) {
+
+    <div class="customer-card">
+
+      <div class="table-header">
+
+        <h2>Customer List</h2>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+
+              <th>Name</th>
+
+              <th>Phone</th>
+
+              <th>Address</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @if (loading) {
+
+              <tr>
+
+                <td
+                  colspan="5"
+                  class="no-data">
+
+                  Loading customers...
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            @else if (error) {
+
+              <tr>
+
+                <td
+                  colspan="5"
+                  class="no-data">
+
+                  {{ error }}
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            @else {
+
+              @for (
+                customer of customers;
+                track customer.id
+              ) {
+
+                <tr>
+
+                  <td>
+                    {{ customer.id }}
+                  </td>
+
+                  <td>
+                    {{ customer.name }}
+                  </td>
+
+                  <td>
+                    {{ customer.phone }}
+                  </td>
+
+                  <td>
+                    {{ customer.address }}
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="edit-btn"
+                      (click)="editCustomer(customer)">
+
+                      Edit
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              }
+
+
+              @if (customers.length === 0) {
+
+                <tr>
+
+                  <td
+                    colspan="5"
+                    class="no-data">
+
+                    No customers found
+
+                  </td>
+
+                </tr>
+
+              }
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- Add Customer Form -->
+
+  @if (showForm) {
+
+    <div class="customer-card customer-form-card">
+
+      <div class="table-header">
+
+        <h2>Customer Details</h2>
+
+        <p>
+          Enter the customer's information below.
+        </p>
+
+      </div>
+
+
+      <form [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label for="name">
+              Customer Name
+            </label>
+
+            <input
+              id="name"
+              type="text"
+               formControlName="name"
+              placeholder="Enter customer name">
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="phone">
+              Phone Number
+            </label>
+
+            <input
+              id="phone"
+              type="text"
+               formControlName="phone"
+              placeholder="Enter phone number">
+
+          </div>
+
+
+          <!-- <div class="form-group">
+
+            <label for="email">
+              Email
+            </label>
+
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter email address">
+
+          </div> -->
+
+
+          <div class="form-group full-width">
+
+            <label for="address">
+              Address
+            </label>
+
+            <textarea
+              id="address"
+              rows="4"
+              formControlName="address"
+              placeholder="Enter customer address">
+            </textarea>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="cancelAddCustomer()">
+
+            Cancel
+
+          </button>
+
+
+          <button
+            type="button"
+            (click)="saveCustomer()"
+            class="save-button">
+
+            Save Customer
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  }
+
+</div>

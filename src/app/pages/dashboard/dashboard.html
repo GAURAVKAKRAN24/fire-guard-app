@@ -1,0 +1,349 @@
+<div class="dashboard">
+
+  <!-- Page heading -->
+
+  <div class="page-heading">
+    <div>
+      <span class="eyebrow">OVERVIEW</span>
+      <h1>Dashboard</h1>
+      <p>Monitor your fire safety operations at a glance.</p>
+    </div>
+
+    <button class="add-button">
+      <span>+</span>
+      Add Service
+    </button>
+  </div>
+
+
+  <!-- Summary cards -->
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <div class="stat-top">
+        <div class="stat-icon customers-icon">👥</div>
+        <span class="stat-label">Customers</span>
+      </div>
+      <div class="stat-value">{{ dashboardSummary?.total_customers ?? 0 }}</div>
+
+      <div class="stat-footer">
+        <span class="positive">↑ 8.2%</span>
+        <span>vs last month</span>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-top">
+        <div class="stat-icon extinguisher-icon">🧯</div>
+        <span class="stat-label">Extinguishers</span>
+      </div>
+
+      <div class="stat-value">{{ dashboardSummary?.total_extinguishers ?? 0 }}</div>
+
+      <div class="stat-footer">
+        <span class="positive">↑ 5.4%</span>
+        <span>vs last month</span>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card due-card">
+
+      <div class="stat-top">
+        <div class="stat-icon due-icon">!</div>
+        <span class="stat-label">Service Due</span>
+      </div>
+
+      <div class="stat-value">{{ dashboardSummary?.due_extinguishers ?? 0 }}</div>
+
+      <div class="stat-footer">
+        <span class="danger">Needs attention</span>
+      </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+      <div class="stat-top">
+        <div class="stat-icon upcoming-icon">◷</div>
+        <span class="stat-label">Upcoming</span>
+      </div>
+
+      <div class="stat-value">{{ dashboardSummary?.upcoming_extinguishers ?? 0 }}</div>
+
+      <div class="stat-footer">
+        <span class="warning">Next 30 days</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Main dashboard grid -->
+
+  <div class="dashboard-grid">
+
+
+    <!-- Service overview -->
+
+    <div class="dashboard-card service-overview">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Service Overview</h2>
+          <p>Monthly service activity</p>
+        </div>
+
+        <select>
+          <option>Last 6 months</option>
+          <option>Last 12 months</option>
+        </select>
+
+      </div>
+
+      <div class="chart-area">
+
+        <div class="chart-bars">
+
+          <div class="bar-group">
+            <div class="bar bar-1"></div>
+            <span>Apr</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar bar-2"></div>
+            <span>May</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar bar-3"></div>
+            <span>Jun</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar bar-4"></div>
+            <span>Jul</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar bar-5"></div>
+            <span>Aug</span>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar bar-6"></div>
+            <span>Sep</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Quick actions -->
+
+    <div class="dashboard-card quick-actions">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Quick Actions</h2>
+          <p>Common tasks</p>
+        </div>
+
+      </div>
+
+      <button class="quick-action">
+        <span class="action-icon">👤</span>
+        <span>
+          <strong>Add Customer</strong>
+          <small>Create a new customer</small>
+        </span>
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="quick-action">
+        <span class="action-icon">🧯</span>
+        <span>
+          <strong>Add Extinguisher</strong>
+          <small>Register an extinguisher</small>
+        </span>
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="quick-action">
+        <span class="action-icon">🔧</span>
+        <span>
+          <strong>Record Service</strong>
+          <small>Add service details</small>
+        </span>
+        <span class="arrow">→</span>
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- Bottom section -->
+
+  <div class="dashboard-grid bottom-grid">
+
+
+    <!-- Due services -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Service Due</h2>
+          <p>Requires immediate attention</p>
+        </div>
+
+        <button class="view-all">View all →</button>
+
+      </div>
+
+      <div class="service-list">
+
+        <div class="service-row">
+
+          <div class="service-extinguisher">
+            <span class="ext-icon">🧯</span>
+            <div>
+              <strong>FE-001</strong>
+              <small>ABC · 4 KG</small>
+            </div>
+          </div>
+
+          <div class="service-customer">
+            <strong>Rajesh Kumar</strong>
+            <small>Jansath Road</small>
+          </div>
+
+          <span class="status due">Due</span>
+
+        </div>
+
+
+        <div class="service-row">
+
+          <div class="service-extinguisher">
+            <span class="ext-icon">🧯</span>
+            <div>
+              <strong>FE-014</strong>
+              <small>CO₂ · 5 KG</small>
+            </div>
+          </div>
+
+          <div class="service-customer">
+            <strong>Amit Sharma</strong>
+            <small>Khatauli</small>
+          </div>
+
+          <span class="status due">Due</span>
+
+        </div>
+
+
+        <div class="service-row">
+
+          <div class="service-extinguisher">
+            <span class="ext-icon">🧯</span>
+            <div>
+              <strong>FE-027</strong>
+              <small>ABC · 6 KG</small>
+            </div>
+          </div>
+
+          <div class="service-customer">
+            <strong>Anil Kumar</strong>
+            <small>Meerut Road</small>
+          </div>
+
+          <span class="status due">Due</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Recent services -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+          <h2>Recent Services</h2>
+          <p>Latest service activity</p>
+        </div>
+
+        <button class="view-all">View all →</button>
+
+      </div>
+
+      <div class="recent-list">
+
+        <div class="recent-row">
+
+          <div class="recent-icon">✓</div>
+
+          <div>
+            <strong>FE-102 serviced</strong>
+            <small>Rajesh Kumar · Today</small>
+          </div>
+
+          <span>₹450</span>
+
+        </div>
+
+
+        <div class="recent-row">
+
+          <div class="recent-icon">✓</div>
+
+          <div>
+            <strong>FE-087 serviced</strong>
+            <small>Vikas Traders · Yesterday</small>
+          </div>
+
+          <span>₹350</span>
+
+        </div>
+
+
+        <div class="recent-row">
+
+          <div class="recent-icon">✓</div>
+
+          <div>
+            <strong>FE-056 serviced</strong>
+            <small>Sharma Industries · 2 days ago</small>
+          </div>
+
+          <span>₹500</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
