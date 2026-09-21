@@ -1,0 +1,19 @@
+@if (confirmationService.confirmation(); as confirmation) {
+  <div class="confirmation-backdrop" (click)="confirmationService.close(false)">
+    <section class="confirmation-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmation-title" (click)="$event.stopPropagation()">
+      <div class="warning-icon" aria-hidden="true">!</div>
+      <div class="dialog-copy">
+        <span class="dialog-kicker">PLEASE CONFIRM</span>
+        <h2 id="confirmation-title">{{ confirmation.title }}</h2>
+        <p>{{ confirmation.message }}</p>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" class="keep-button" (click)="confirmationService.close(false)">Keep customer</button>
+        <button type="button" class="delete-button" (click)="confirmationService.close(true)">
+          <span aria-hidden="true">×</span>
+          {{ confirmation.confirmLabel || 'Delete customer' }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

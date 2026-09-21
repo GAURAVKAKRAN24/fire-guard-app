@@ -1,0 +1,16 @@
+<div class="notification-stack" aria-live="polite" aria-atomic="true">
+  @for (notification of notificationService.notifications(); track notification.id) {
+    <div class="toast" [class]="'toast ' + notification.type" role="status">
+      <span class="toast-icon" aria-hidden="true">
+        @if (notification.type === 'success') { ✓ }
+        @else if (notification.type === 'error') { ! }
+        @else { i }
+      </span>
+      <div class="toast-copy">
+        <strong>{{ notification.type === 'success' ? 'Success' : notification.type === 'error' ? 'Something went wrong' : 'Heads up' }}</strong>
+        <p>{{ notification.message }}</p>
+      </div>
+      <button type="button" class="toast-close" (click)="notificationService.dismiss(notification.id)" aria-label="Dismiss notification">×</button>
+    </div>
+  }
+</div>

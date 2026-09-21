@@ -2,9 +2,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f7f8fa;
-  color: #222222;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f1f7f5;
+  color: #173337;
+  font-size: 16px;
 }
 
 * {
@@ -15,3 +16,17 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+
+/* Shared FireGuard visual language for operational pages */
+.operations-page, .notifications-page { color: #10213e; }
+.operations-page .page-heading h1, .notifications-page .page-heading h1 { font-size: 38px; letter-spacing: -.04em; color: #10213e; }
+.operations-page .eyebrow, .notifications-page .eyebrow { color: #d82f3c; }
+.operations-page .primary-button, .notifications-page .primary-button { background: #df303d; box-shadow: 0 10px 22px rgba(223,48,61,.2); }
+.operations-page .panel, .notifications-page .notification-list { border-color: #e1e6ee; box-shadow: 0 8px 20px rgba(18,38,68,.08); }
+.operations-page .panel-heading h2, .notifications-page .notice-copy strong { color: #10213e; }
+.operations-page .status-pill { background: #e8f4e9; color: #167b43; }
+.operations-page th { background: #f0f3f8; color: #526176; }
+.operations-page td { font-size: 15px; color: #24334a; }
+.operations-page .text-button { color: #274d7c; }.operations-page .danger-button { color: #d82f3c; }
+.notifications-page .notification-summary { background: #edf1f8; color: #344866; }.notifications-page .notification-item.unread { background: #fff5f5; }.notifications-page .notice-icon { background: #fde6e7; color: #d82f3c; }
+@media (max-width: 700px) { .operations-page .page-heading h1, .notifications-page .page-heading h1 { font-size: 31px; } }

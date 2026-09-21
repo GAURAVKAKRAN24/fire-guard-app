@@ -165,6 +165,18 @@
 
                   </td>
 
+                  <td>
+
+                    <button
+                      class="delete-btn"
+                      (click)="deleteCustomer(customer.id)">
+
+                      Delete
+
+                    </button>
+
+                  </td>
+
                 </tr>
 
               }
@@ -216,7 +228,7 @@
       </div>
 
 
-      <form [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+      <form [formGroup]="customerForm" (ngSubmit)="isEditMode ? updateCustomerDetails(selectedCustomer?.id, customerForm.value) : saveCustomer()">
 
         <div class="form-grid">
 
@@ -295,12 +307,9 @@
 
 
           <button
-            type="button"
-            (click)="saveCustomer()"
+            type="submit"
             class="save-button">
-
-            Save Customer
-
+            {{ isEditMode ? 'Update Customer' : 'Save Customer' }}
           </button>
 
         </div>

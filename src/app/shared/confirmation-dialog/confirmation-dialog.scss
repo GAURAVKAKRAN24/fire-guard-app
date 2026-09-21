@@ -1,0 +1,56 @@
+.confirmation-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(20, 30, 43, .42);
+  backdrop-filter: blur(5px);
+  animation: backdrop-in .2s ease-out;
+}
+
+.confirmation-dialog {
+  width: min(440px, 100%);
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(14, 27, 42, .28);
+  animation: dialog-in .28s cubic-bezier(.2, .8, .2, 1);
+}
+
+.warning-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #fff1ed, #ffe1d7);
+  color: #df4828;
+  font-size: 26px;
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(228, 75, 43, .12);
+}
+
+.dialog-kicker { color: #e05939; font-size: 10px; font-weight: 800; letter-spacing: .12em; }
+.dialog-copy h2 { margin: 6px 0 8px; color: #26323f; font-size: 21px; }
+.dialog-copy p { margin: 0; color: #6a7684; font-size: 14px; line-height: 1.55; }
+
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px; }
+.dialog-actions button { min-height: 42px; border-radius: 10px; padding: 0 15px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.keep-button { border: 1px solid #e1e6eb; background: #fff; color: #5d6977; }
+.keep-button:hover { background: #f6f8fa; }
+.delete-button { border: 1px solid #d93f28; background: linear-gradient(135deg, #ed6241, #d94029); color: #fff; box-shadow: 0 8px 16px rgba(217, 63, 40, .23); }
+.delete-button:hover { filter: brightness(.96); transform: translateY(-1px); }
+.delete-button span { font-size: 18px; line-height: 0; vertical-align: -1px; margin-right: 3px; }
+
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+@media (max-width: 480px) {
+  .confirmation-dialog { padding: 23px 20px; }
+  .dialog-actions { flex-direction: column-reverse; }
+  .dialog-actions button { width: 100%; }
+}

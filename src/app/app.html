@@ -1,5 +1,9 @@
 <div class="app-layout">
 
+  <app-global-loader />
+  <app-notification-center />
+  <app-confirmation-dialog />
+
   <app-sidebar
     [isOpen]="sidebarOpen"
     (menuClose)="closeSidebar()">
@@ -19,6 +23,11 @@
         <h1>Dashboard</h1>
         <p>Fire Safety Management System</p>
       </div>
+
+      <label class="global-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" placeholder="Search customers, extinguishers, locations…" aria-label="Global search">
+      </label>
 
       <div class="header-actions">
 
@@ -42,5 +51,12 @@
   </section>
 
   </main>
+
+  <nav class="mobile-tabs" aria-label="Primary navigation">
+    <a routerLink="/dashboard" routerLinkActive="active"><span>⌂</span><small>Home</small></a>
+    <a routerLink="/customers" routerLinkActive="active"><span>♙</span><small>Customers</small></a>
+    <a routerLink="/extinguishers" routerLinkActive="active"><span>▣</span><small>Units</small></a>
+    <a routerLink="/services" routerLinkActive="active"><span>✓</span><small>Services</small></a>
+  </nav>
 
 </div>

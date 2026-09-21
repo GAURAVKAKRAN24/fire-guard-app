@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+/* FireGuard-inspired customer workspace */
+.customer-page { max-width: 1450px; }.page-heading h1 { font-size: 38px; letter-spacing: -.04em; color: #10213e; }.page-heading p { font-size: 16px; color: #5e6b7e; }.eyebrow { color: #d82f3c; font-size: 12px; }.add-button,.save-button { min-height: 50px; border-radius: 10px; background: #df303d; font-size: 16px; box-shadow: 0 10px 22px rgba(223,48,61,.2); }.cancel-button { min-height: 50px; border-radius: 10px; font-size: 16px; }.customer-card { border: 1px solid #e1e6ee; border-radius: 14px; box-shadow: 0 8px 20px rgba(18,38,68,.08); }.table-header h2 { color: #10213e; font-size: 22px; }.table-header p { font-size: 15px; }.table-wrapper { border-radius: 10px; }.table-wrapper th { padding: 15px 12px; background: #f0f3f8; color: #526176; font-size: 12px; }.table-wrapper td { padding: 16px 12px; color: #24334a; font-size: 15px; }.edit-btn,.delete-btn { padding: 9px 13px; border-radius: 8px; font-size: 14px; font-weight: 700; }.delete-btn { background: #df303d; border-color: #df303d; }.form-group label { font-size: 15px; color: #24334a; }.form-group input,.form-group textarea { border-color: #d9e0ea; font-size: 16px; }.form-group input:focus,.form-group textarea:focus { border-color: #df303d; box-shadow: 0 0 0 3px rgba(223,48,61,.12); }
+
 /* =========================
    PAGE HEADING
 ========================= */
@@ -161,6 +164,16 @@ td {
   border: 1px solid #e5e5e5;
   background: #fff;
   color: #555;
+  padding: 7px 12px;
+  border-radius: 7px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  border: 1px solid #ee9999;
+  background: #f20303;
+  color: #fff;
   padding: 7px 12px;
   border-radius: 7px;
   font-size: 11px;

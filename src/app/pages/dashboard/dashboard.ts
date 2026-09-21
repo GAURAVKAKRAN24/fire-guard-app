@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../core/services/dashboard';
 import { DashboardSummary } from '../../core/models/dashboard.model';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../core/services/notification';
 
 @Component({
   imports: [CommonModule],
@@ -14,7 +15,8 @@ export class Dashboard implements OnInit  {
 
   constructor(
     private dashboardService: DashboardService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class Dashboard implements OnInit  {
       },
       error: (error) => {
         console.error('Dashboard API error:', error);
+        this.notificationService.error('Unable to load the dashboard summary. Please try again.');
       }
     });
   }
