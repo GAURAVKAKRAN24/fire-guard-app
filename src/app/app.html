@@ -1,62 +1,118 @@
 <div class="app-layout">
+  <app-global-loader/>
+  <app-notification-center/>
+  <app-confirmation-dialog/>
 
-  <app-global-loader />
-  <app-notification-center />
-  <app-confirmation-dialog />
+  <div class="flex min-h-screen bg-slate-100">
+    <app-sidebar [isOpen]="sidebarOpen" (menuClose)="closeSidebar()"></app-sidebar>
 
-  <app-sidebar
-    [isOpen]="sidebarOpen"
-    (menuClose)="closeSidebar()">
-  </app-sidebar>
+    <div class="main-content flex-1">
+      <header class="top-header sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+        <div class="flex w-full items-center gap-3 md:px-6 lg:px-8">
+          <button class="menu-button inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition hover:bg-slate-100 md:hidden" (click)="openSidebar()" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+          </button>
 
-  <main class="main-content">
+          <div class="page-title flex-1 min-w-0">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">Management System</p>
+            <h1 class="mt-1 text-xl font-bold text-slate-900 md:text-2xl">FireGuard</h1>
+          </div>
 
-    <header class="top-header">
+          <label class="global-search hidden max-w-md flex-1 items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 shadow-sm transition focus-within:border-brand-500 focus-within:bg-white focus-within:shadow-soft md:flex" aria-label="Global search">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="6"/>
+              <path d="m16 16 4 4"/>
+            </svg>
+            <input type="search" class="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400" placeholder="Search customers, extinguishers, locations…" aria-label="Search the system"/>
+            <button type="button" class="search-button rounded-xl bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-700">Search</button>
+          </label>
 
-      <button
-        class="menu-button"
-        (click)="openSidebar()">
-        ☰
-      </button>
+          <div class="header-actions flex items-center gap-3">
+            <button class="header-button relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition hover:bg-slate-100" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"/>
+                <path d="M10 20a2 2 0 0 0 4 0"/>
+              </svg>
+              <span class="notification-dot absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"></span>
+            </button>
 
-      <div class="page-title">
-        <h1>Dashboard</h1>
-        <p>Fire Safety Management System</p>
-      </div>
-
-      <label class="global-search">
-        <span aria-hidden="true">⌕</span>
-        <input type="search" placeholder="Search customers, extinguishers, locations…" aria-label="Global search">
-      </label>
-
-      <div class="header-actions">
-
-        <button class="header-button">
-          🔔
-          <span class="notification-dot"></span>
-        </button>
-
-        <div class="header-avatar">
-          G
+            <div class="header-avatar flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-red-500 text-sm font-bold text-white shadow-lg shadow-orange-200">G</div>
+          </div>
         </div>
+      </header>
 
-      </div>
+      <section class="page-content px-4 py-4 md:px-6 md:py-6 lg:px-8">
+        <router-outlet></router-outlet>
+      </section>
+    </div>
+  </div>
 
-    </header>
-
-   <section class="page-content">
-
-    <router-outlet></router-outlet>
-
-  </section>
-
-  </main>
-
-  <nav class="mobile-tabs" aria-label="Primary navigation">
-    <a routerLink="/dashboard" routerLinkActive="active"><span>⌂</span><small>Home</small></a>
-    <a routerLink="/customers" routerLinkActive="active"><span>♙</span><small>Customers</small></a>
-    <a routerLink="/extinguishers" routerLinkActive="active"><span>▣</span><small>Units</small></a>
-    <a routerLink="/services" routerLinkActive="active"><span>✓</span><small>Services</small></a>
+  <nav class="mobile-tabs fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-slate-200 bg-white/90 p-2 shadow-[0_-12px_30px_-18px_rgba(15,23,42,0.4)] backdrop-blur md:hidden" aria-label="Primary navigation">
+    <a routerLink="/dashboard" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+      <svg
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="3"/>
+        <path d="M7 16v-3"/>
+        <path d="M11 16V9"/>
+        <path d="M15 16v-5"/>
+        <path d="M19 16V7"/>
+      </svg>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/customers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1"/><circle cx="10" cy="7" r="4"/><path d="M20 19v-1a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Customers</span>
+    </a>
+    <a routerLink="/extinguishers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+      <svg
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.9"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M9 4h5a2 2 0 0 1 2 2v1"/>
+        <path d="M10 4V2.5h3V4"/>
+        <path d="M8 7h7v11a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2V7Z"/>
+        <path d="M9 7V5h5v2"/>
+        <path d="M15 9h2a2 2 0 0 1 2 2v3"/>
+        <path d="M19 14v3"/>
+        <path d="M17.5 17h3"/>
+        <path d="M9.5 11h4"/>
+        <path d="M9.5 13.5h4"/>
+      </svg>
+      <span>Extinguishers</span>
+    </a>
+    <a routerLink="/services" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+      <svg
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <!-- Gear -->
+        <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
+        <path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.3-1-1.8-3-1.6.6a7.7 7.7 0 0 0-2.6-1.5L14.5 4h-3l-.2 1.6a7.7 7.7 0 0 0-2.6 1.5L7.1 6.5l-1.8 3 1.3 1a7.8 7.8 0 0 0 0 3l-1.3 1 1.8 3 1.6-.6a7.7 7.7 0 0 0 2.6 1.5l.2 1.6h3l.2-1.6a7.7 7.7 0 0 0 2.6-1.5l1.6.6 1.8-3-1.3-1Z"/>
+      </svg>
+      <span>Services</span>
+    </a>
   </nav>
-
 </div>
+
