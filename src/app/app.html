@@ -7,30 +7,30 @@
     <app-sidebar [isOpen]="sidebarOpen" (menuClose)="closeSidebar()"></app-sidebar>
 
     <div class="main-content flex-1">
-      <header class="top-header sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
+      <header class="top-header sticky top-0 z-30 border-b border-slate-700/60 bg-slate-900/95 text-white shadow-lg shadow-slate-950/10 backdrop-blur-xl">
         <div class="flex w-full items-center gap-3 md:px-6 lg:px-8">
-          <button class="menu-button inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition hover:bg-slate-100 md:hidden" (click)="openSidebar()" aria-label="Open menu">
+          <button class="menu-button inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-600 bg-slate-800 text-slate-200 shadow-sm transition hover:bg-slate-700 md:hidden" (click)="openSidebar()" aria-label="Open menu">
             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 7h16M4 12h16M4 17h16"/>
             </svg>
           </button>
 
           <div class="page-title flex-1 min-w-0">
-            <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">Management System</p>
-            <h1 class="mt-1 text-xl font-bold text-slate-900 md:text-2xl">FireGuard</h1>
+            <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-400">Management System</p>
+            <h1 class="mt-1 text-xl font-bold text-white md:text-2xl">FireGuard</h1>
           </div>
 
-          <label class="global-search hidden max-w-md flex-1 items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 shadow-sm transition focus-within:border-brand-500 focus-within:bg-white focus-within:shadow-soft md:flex" aria-label="Global search">
+          <label class="global-search hidden max-w-md flex-1 items-center gap-3 rounded-2xl border border-slate-700 bg-slate-800/90 px-3 py-2 shadow-inner transition focus-within:border-orange-400 focus-within:bg-slate-800 md:flex" aria-label="Global search">
             <svg viewBox="0 0 24 24" class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="6"/>
               <path d="m16 16 4 4"/>
             </svg>
-            <input type="search" class="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400" placeholder="Search customers, extinguishers, locations…" aria-label="Search the system"/>
-            <button type="button" class="search-button rounded-xl bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-700">Search</button>
+            <input type="search" class="w-full border-0 bg-transparent text-sm text-white outline-none placeholder:text-slate-400" placeholder="Search customers, extinguishers, locations…" aria-label="Search the system"/>
+            <button type="button" class="search-button rounded-xl bg-orange-500 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-orange-600">Search</button>
           </label>
 
           <div class="header-actions flex items-center gap-3">
-            <button class="header-button relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition hover:bg-slate-100" aria-label="Notifications">
+            <button class="header-button relative inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-700 bg-slate-800 text-slate-200 shadow-sm transition hover:bg-slate-700" aria-label="Notifications">
               <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"/>
                 <path d="M10 20a2 2 0 0 0 4 0"/>
@@ -38,7 +38,7 @@
               <span class="notification-dot absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"></span>
             </button>
 
-            <div class="header-avatar flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-red-500 text-sm font-bold text-white shadow-lg shadow-orange-200">G</div>
+            <div class="header-avatar flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-500 to-red-500 text-sm font-bold text-white shadow-lg shadow-orange-950/40">G</div>
           </div>
         </div>
       </header>
@@ -49,8 +49,8 @@
     </div>
   </div>
 
-  <nav class="mobile-tabs fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-slate-200 bg-white/90 p-2 shadow-[0_-12px_30px_-18px_rgba(15,23,42,0.4)] backdrop-blur md:hidden" aria-label="Primary navigation">
-    <a routerLink="/dashboard" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+  <nav class="mobile-tabs fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-slate-700/70 bg-slate-900/95 p-2 shadow-[0_-12px_30px_-18px_rgba(15,23,42,0.8)] backdrop-blur md:hidden" aria-label="Primary navigation">
+    <a routerLink="/dashboard" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-slate-100">
       <svg
         viewBox="0 0 24 24"
         class="h-5 w-5"
@@ -69,11 +69,11 @@
       </svg>
       <span>Dashboard</span>
     </a>
-    <a routerLink="/customers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+    <a routerLink="/customers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-slate-100">
       <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 19v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1"/><circle cx="10" cy="7" r="4"/><path d="M20 19v-1a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <span>Customers</span>
     </a>
-    <a routerLink="/extinguishers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+    <a routerLink="/extinguishers" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-slate-100">
       <svg
         viewBox="0 0 24 24"
         class="h-5 w-5"
@@ -96,7 +96,7 @@
       </svg>
       <span>Extinguishers</span>
     </a>
-    <a routerLink="/services" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-500 transition hover:text-slate-900">
+    <a routerLink="/services" routerLinkActive="active" class="flex min-w-0 flex-1 flex-col items-center gap-1 rounded-xl px-2 py-2 text-[10px] font-medium text-slate-400 transition hover:bg-slate-800 hover:text-slate-100">
       <svg
         viewBox="0 0 24 24"
         class="h-5 w-5"

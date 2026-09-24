@@ -24,10 +24,9 @@
 
       <div class="stat-top">
         <div class="stat-icon customers-icon">👥</div>
-        <span class="stat-label">Customers</span>
+        <div class="stat-value">{{ dashboardSummary?.total_customers ?? 0 }}</div>
       </div>
-      <div class="stat-value">{{ dashboardSummary?.total_customers ?? 0 }}</div>
-
+      <span class="stat-label">Customers</span>
       <div class="stat-footer">
         <span class="positive">↑ 8.2%</span>
         <span>vs last month</span>
@@ -40,11 +39,10 @@
 
       <div class="stat-top">
         <div class="stat-icon extinguisher-icon">🧯</div>
-        <span class="stat-label">Extinguishers</span>
+        <div class="stat-value">{{ dashboardSummary?.total_extinguishers ?? 0 }}</div>
       </div>
-
-      <div class="stat-value">{{ dashboardSummary?.total_extinguishers ?? 0 }}</div>
-
+      <span class="stat-label">Extinguishers</span>
+      
       <div class="stat-footer">
         <span class="positive">↑ 5.4%</span>
         <span>vs last month</span>
@@ -57,10 +55,9 @@
 
       <div class="stat-top">
         <div class="stat-icon due-icon">!</div>
-        <span class="stat-label">Service Due</span>
+        <div class="stat-value">{{ dashboardSummary?.due_extinguishers ?? 0 }}</div>
       </div>
-
-      <div class="stat-value">{{ dashboardSummary?.due_extinguishers ?? 0 }}</div>
+      <span class="stat-label">Service Due</span>
 
       <div class="stat-footer">
         <span class="danger">Needs attention</span>
@@ -73,10 +70,10 @@
 
       <div class="stat-top">
         <div class="stat-icon upcoming-icon">◷</div>
-        <span class="stat-label">Upcoming</span>
+        <div class="stat-value">{{ dashboardSummary?.upcoming_extinguishers ?? 0 }}</div>
       </div>
-
-      <div class="stat-value">{{ dashboardSummary?.upcoming_extinguishers ?? 0 }}</div>
+      <span class="stat-label">Upcoming</span>
+      
 
       <div class="stat-footer">
         <span class="warning">Next 30 days</span>
@@ -180,9 +177,9 @@
           <div class="customer-details">
             <div class="customer-head">
               <h3>{{ item.name }}</h3>
-              <span class="status-pill" [ngClass]="item.status === 'due' ? 'status-due' : 'status-upcoming'">
+              <!-- <span class="status-pill" [ngClass]="item.status === 'due' ? 'status-due' : 'status-upcoming'">
                 {{ item.status === 'due' ? 'Due' : 'Upcoming' }}
-              </span>
+              </span> -->
             </div>
 
             <p>{{ item.address }}</p>
@@ -236,18 +233,18 @@
                 aria-label="Send WhatsApp message"
               >
                 <svg
-  viewBox="0 0 24 24"
-  class="h-5 w-5"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  aria-hidden="true"
->
-  <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L5 19l1-3.5A7.5 7.5 0 1 1 20 11.5Z"/>
-  <path d="M9 9c.2-.5.5-.7.8-.7h.5l.8 1.8-.8.9c.5 1 1.3 1.8 2.3 2.3l.9-.8 1.8.8v.5c0 .3-.2.6-.7.8-1.5.5-4.7-1.9-5.6-3.6-.3-.6-.4-1.5 0-2Z"/>
-</svg>
+                  viewBox="0 0 24 24"
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L5 19l1-3.5A7.5 7.5 0 1 1 20 11.5Z"/>
+                  <path d="M9 9c.2-.5.5-.7.8-.7h.5l.8 1.8-.8.9c.5 1 1.3 1.8 2.3 2.3l.9-.8 1.8.8v.5c0 .3-.2.6-.7.8-1.5.5-4.7-1.9-5.6-3.6-.3-.6-.4-1.5 0-2Z"/>
+                </svg>
               </a>
 
             </div>
@@ -258,7 +255,8 @@
           </div>
 
           <div class="customer-footer-note">
-            {{ item.count }} Extinguishers | Next Service {{ item.dueDate|date: 'MMM d, y' }}
+            <span>{{ item.count }} Extinguishers | Next Service {{ item.dueDate|date: 'MMM d, y' }}</span>
+
           </div>
         </article>
 

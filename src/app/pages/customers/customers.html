@@ -60,153 +60,68 @@
 
   @if (!showForm) {
 
-    <div class="customer-card">
-
-      <div class="table-header">
-
-        <h2>Customer List</h2>
-
+    <section class="customer-card customer-list-card" aria-labelledby="customer-list-title">
+      <div class="list-header">
+        <div>
+          <span class="section-kicker">CUSTOMER DIRECTORY</span>
+          <h2 id="customer-list-title">Your customers</h2>
+          <p>Keep contact details and service locations close at hand.</p>
+        </div>
+        <span class="customer-count">{{ customers.length }} total</span>
       </div>
 
+      @if (loading) {
+        <div class="list-state" role="status">
+          <span class="state-spinner"></span>
+          <span>Loading customers...</span>
+        </div>
+      } @else if (error) {
+        <div class="list-state error-state" role="alert">
+          <span class="state-icon">!</span>
+          <span>{{ error }}</span>
+        </div>
+      } @else if (customers.length === 0) {
+        <div class="list-state empty-state">
+          <span class="state-icon">+</span>
+          <strong>No customers found</strong>
+          <span>Add your first customer to start managing service records.</span>
+        </div>
+      } @else {
+        <div class="customer-list" role="list">
+          @for (customer of customers; track customer.id) {
+            <article class="customer-item" role="listitem">
+              <div class="customer-avatar" aria-hidden="true">{{ customer.name.charAt(0).toUpperCase() }}</div>
 
-      <div class="table-wrapper">
+              <div class="customer-main">
+                <div class="customer-name-line">
+                  <h3>{{ customer.name }}</h3>
+                  <span class="customer-id">#{{ customer.id }}</span>
+                </div>
+                <a class="customer-phone" [href]="'tel:' + customer.phone">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5 9 3l2 5-2 1.5a13 13 0 0 0 5.5 5.5L16 13l5 2-.5 2.4a2 2 0 0 1-2.2 1.6A16.5 16.5 0 0 1 5 5.7 2 2 0 0 1 6.6 3.5Z"/></svg>
+                  {{ customer.phone }}
+                </a>
+                <p class="customer-address">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></svg>
+                  <span>{{ customer.address || 'No address provided' }}</span>
+                </p>
+              </div>
 
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>ID</th>
-
-              <th>Name</th>
-
-              <th>Phone</th>
-
-              <th>Address</th>
-
-              <th>Actions</th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            @if (loading) {
-
-              <tr>
-
-                <td
-                  colspan="5"
-                  class="no-data">
-
-                  Loading customers...
-
-                </td>
-
-              </tr>
-
-            }
-
-
-            @else if (error) {
-
-              <tr>
-
-                <td
-                  colspan="5"
-                  class="no-data">
-
-                  {{ error }}
-
-                </td>
-
-              </tr>
-
-            }
-
-
-            @else {
-
-              @for (
-                customer of customers;
-                track customer.id
-              ) {
-
-                <tr>
-
-                  <td>
-                    {{ customer.id }}
-                  </td>
-
-                  <td>
-                    {{ customer.name }}
-                  </td>
-
-                  <td>
-                    {{ customer.phone }}
-                  </td>
-
-                  <td>
-                    {{ customer.address }}
-                  </td>
-
-                  <td>
-
-                    <button
-                      class="edit-btn"
-                      (click)="editCustomer(customer)">
-
-                      Edit
-
-                    </button>
-
-                  </td>
-
-                  <td>
-
-                    <button
-                      class="delete-btn"
-                      (click)="deleteCustomer(customer.id)">
-
-                      Delete
-
-                    </button>
-
-                  </td>
-
-                </tr>
-
-              }
-
-
-              @if (customers.length === 0) {
-
-                <tr>
-
-                  <td
-                    colspan="5"
-                    class="no-data">
-
-                    No customers found
-
-                  </td>
-
-                </tr>
-
-              }
-
-            }
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
+              <div class="customer-actions">
+                <button class="edit-btn" type="button" (click)="editCustomer(customer)" aria-label="Edit customer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 16.5-.8 4.3 4.3-.8L19 8.5 15.5 5 4 16.5Z"/><path d="m13.8 6.7 3.5 3.5M18 3l3 3"/></svg>
+                  <span>Edit</span>
+                </button>
+                <button class="delete-btn" type="button" (click)="deleteCustomer(customer.id)" aria-label="Delete customer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </section>
 
   }
 
