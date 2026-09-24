@@ -4,7 +4,7 @@ import {
     Extinguisher,
     ExtinguisherResponse,
 } from "../models/extinguisher.model";
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 @Injectable({ providedIn: "root" })
 export class ExtinguisherService {
     constructor(private http: HttpClient) {}

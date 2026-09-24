@@ -1,5 +1,5 @@
 <div class="operations-page">
-  <div class="page-heading">
+  <div class="page-heading px-4">
     <div>
       <span class="eyebrow">MAINTENANCE LOG</span>
       <h1>Services</h1>
@@ -79,6 +79,9 @@
           [value]="serviceDateFilter"
           (change)="serviceDateFilter = $any($event.target).value">
       </div>
+      <div>
+        <!-- Empty place -->
+      </div>
       <button
         class="clear-filter-button"
         type="button"
@@ -87,6 +90,8 @@
         Clear filters
       </button>
     </div>
+
+    <div class="service-filter-divider" aria-hidden="true"></div>
 
     <div class="service-list">
       @for (item of filteredServices; track item.id) {

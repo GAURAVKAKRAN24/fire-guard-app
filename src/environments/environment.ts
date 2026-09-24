@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.yourcompany.com'
+  apiUrl: 'https://fire-safety-backend-1.onrender.com'
 };
