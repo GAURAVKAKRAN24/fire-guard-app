@@ -21,6 +21,9 @@ export class Services implements OnInit {
   items: ServiceRecord[] = [];
   extinguishers: Extinguisher[] = [];
   customers: Customer[] = [];
+  extinguisherSearch = '';
+  serviceSearch = '';
+  serviceDateFilter = '';
   showForm = false;
   editingId?: number;
   readonly form;
@@ -76,6 +79,53 @@ export class Services implements OnInit {
     return this.extinguishers.find(item => Number(item.id) === Number(id));
   }
 
+  get filteredExtinguishers(): Extinguisher[] {
+    const search = this.extinguisherSearch.trim().toLowerCase();
+
+    if (!search) {
+      return this.extinguishers;
+    }
+
+    return this.extinguishers.filter(item => {
+      const customer = this.getCustomer(item.customer_id);
+      return [
+        item.extinguisher_no,
+        item.type,
+        customer?.name ?? '',
+        customer?.address ?? '',
+      ].some(value => value.toLowerCase().includes(search));
+    });
+  }
+
+  getCustomer(customerId: number): Customer | undefined {
+    return this.customers.find(customer => customer.id === customerId);
+  }
+
+  get filteredServices(): ServiceRecord[] {
+    const search = this.serviceSearch.trim().toLowerCase();
+
+    if (!search && !this.serviceDateFilter) {
+      return this.items;
+    }
+
+    return this.items.filter(item => {
+      const matchesDate = !this.serviceDateFilter || item.service_date === this.serviceDateFilter;
+      if (!matchesDate) return false;
+
+      if (!search) return true;
+
+      const extinguisher = this.getExtinguisher(item.extinguisher_id);
+      const customer = extinguisher ? this.getCustomer(extinguisher.customer_id) : undefined;
+
+      return [
+        extinguisher?.extinguisher_no ?? '',
+        customer?.name ?? '',
+        customer?.phone ?? '',
+        customer?.address ?? '',
+      ].some(value => value.toLowerCase().includes(search));
+    });
+  }
+
   getCustomerName(service: ServiceRecord): string {
     const extinguisher = this.getExtinguisher(service.extinguisher_id);
     return this.customers.find(customer => customer.id === extinguisher?.customer_id)?.name || 'Customer unavailable';
@@ -83,8 +133,16 @@ export class Services implements OnInit {
 
   reset(): void {
     this.form.reset({ service_type: 'Annual service', amount: 0 });
+    this.extinguisherSearch = '';
+    this.serviceSearch = '';
+    this.serviceDateFilter = '';
     this.editingId = undefined;
     this.showForm = false;
+  }
+
+  clearServiceFilters(): void {
+    this.serviceSearch = '';
+    this.serviceDateFilter = '';
   }
 
   save(): void {

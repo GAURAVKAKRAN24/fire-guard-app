@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CustomerService } from "../../core/services/customer";
@@ -29,6 +29,7 @@ export class Extinguishers implements OnInit {
         private api: ExtinguisherService,
         private customerApi: CustomerService,
         private notice: NotificationService,
+        private readonly cdr: ChangeDetectorRef
     ) {
         this.form = fb.group({
             customer_id: ["", Validators.required],
@@ -46,14 +47,23 @@ export class Extinguishers implements OnInit {
         this.load();
         this.customerApi
             .getCustomers(1, 100)
-            .subscribe((r) => (this.customers = r.customers));
+            .subscribe({
+                next: (r) => {
+                    this.customers = r.customers;
+                    this.cdr.detectChanges();
+                },
+                error: () => this.notice.error("Unable to load customers."),
+            });
     }
 
     load() {
         this.api
-            .getAll()
+            .getAll(1, 100)
             .subscribe({
-                next: (r) => (this.items = r.extinguishers),
+                next: (r) => {
+                    this.items = r.extinguishers;
+                    this.cdr.detectChanges();
+                },
                 error: () => this.notice.error("Unable to load extinguishers."),
             });
     }
@@ -79,7 +89,7 @@ export class Extinguishers implements OnInit {
     getStatusLabel(item: Extinguisher): string {
         if (this.isDue(item)) return "Due";
         if (this.isUpcoming(item)) return "Upcoming";
-        return item.status || "Active";
+        return item.status.toLowerCase() === "inactive" ? "Inactive" : "Active";
     }
 
     getStatusClass(item: Extinguisher): string {
@@ -96,26 +106,37 @@ export class Extinguishers implements OnInit {
     ): boolean {
         if (filter === "due") return this.isDue(item);
         if (filter === "upcoming") return this.isUpcoming(item);
-        return item.status.toLowerCase() === filter;
+        return this.getStatusLabel(item).toLowerCase() === filter;
     }
 
     private isDue(item: Extinguisher): boolean {
-        return (
-            item.status.toLowerCase() === "due" ||
-            (!!item.next_service_date && item.next_service_date <= this.today())
-        );
+        const serviceDate = this.toDateOnly(item.next_service_date);
+        return !!serviceDate && serviceDate <= this.today();
     }
 
     private isUpcoming(item: Extinguisher): boolean {
+        const today = this.today();
+        const serviceDate = this.toDateOnly(item.next_service_date);
         return (
             item.status.toLowerCase() !== "inactive" &&
-            !!item.next_service_date &&
-            item.next_service_date > this.today()
+            !!serviceDate &&
+            serviceDate > today &&
+            serviceDate <= this.addDays(today, 30)
         );
+    }
+
+    private toDateOnly(value: string | null | undefined): string {
+        return value ? value.slice(0, 10) : "";
     }
 
     private today(): string {
         return new Date().toISOString().slice(0, 10);
+    }
+
+    private addDays(value: string, days: number): string {
+        const date = new Date(`${value}T00:00:00`);
+        date.setDate(date.getDate() + days);
+        return date.toISOString().slice(0, 10);
     }
 
     edit(item: Extinguisher) {

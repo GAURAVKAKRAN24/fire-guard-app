@@ -5,7 +5,7 @@
       <h1>Services</h1>
       <p>Record inspections and keep every extinguisher ready for use.</p>
     </div>
-    <button class="primary-button" (click)="showForm=true; editingId=undefined; form.reset({service_type:'Annual service',amount:0})">
+    <button class="primary-button" (click)="showForm=true; editingId=undefined; extinguisherSearch=''; form.reset({service_type:'Annual service',amount:0})">
       + Record service
     </button>
   </div>
@@ -18,13 +18,27 @@
       </div>
       <form [formGroup]="form" (ngSubmit)="save()">
         <div class="form-grid">
+          <label>Search extinguisher
+            <input
+              type="search"
+              [value]="extinguisherSearch"
+              (input)="extinguisherSearch = $any($event.target).value"
+              placeholder="Search number, customer or address"
+              autocomplete="off">
+          </label>
           <label>Extinguisher
             <select formControlName="extinguisher_id">
               <option value="">Select extinguisher</option>
-              @for (item of extinguishers; track item.id) {
-                <option [value]="item.id">{{ item.extinguisher_no }} · {{ item.type }}</option>
+              @for (item of filteredExtinguishers; track item.id) {
+                @let customer = getCustomer(item.customer_id);
+                <option [value]="item.id">
+                  {{ item.extinguisher_no }} · {{ item.type }} · {{ customer?.name || 'Customer unavailable' }} · {{ customer?.address || 'No address' }}
+                </option>
               }
             </select>
+            @if (filteredExtinguishers.length === 0) {
+              <small class="field-hint">No extinguishers match your search.</small>
+            }
           </label>
           <label>Service type<input formControlName="service_type"></label>
           <label>Service date<input type="date" formControlName="service_date"></label>
@@ -46,8 +60,36 @@
       <p>Newest records are shown first.</p>
     </div>
 
+    <div class="service-filters">
+      <div class="service-search">
+        <label for="service-search-input">Search services</label>
+        <input
+          id="service-search-input"
+          type="search"
+          [value]="serviceSearch"
+          (input)="serviceSearch = $any($event.target).value"
+          placeholder="Search extinguisher, customer, phone or address"
+          autocomplete="off">
+      </div>
+      <div class="service-date-filter">
+        <label for="service-date-filter">Filter by date</label>
+        <input
+          id="service-date-filter"
+          type="date"
+          [value]="serviceDateFilter"
+          (change)="serviceDateFilter = $any($event.target).value">
+      </div>
+      <button
+        class="clear-filter-button"
+        type="button"
+        (click)="clearServiceFilters()"
+        [disabled]="!serviceSearch && !serviceDateFilter">
+        Clear filters
+      </button>
+    </div>
+
     <div class="service-list">
-      @for (item of items; track item.id) {
+      @for (item of filteredServices; track item.id) {
         <article class="service-card">
           <div class="service-card-top">
             <div>
@@ -83,7 +125,9 @@
           </div>
         </article>
       } @empty {
-        <div class="empty service-empty">No service records yet.</div>
+        <div class="empty service-empty">
+          {{ serviceSearch || serviceDateFilter ? 'No matching service records.' : 'No service records yet.' }}
+        </div>
       }
     </div>
   </section>

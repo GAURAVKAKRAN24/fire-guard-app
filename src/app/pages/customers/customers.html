@@ -67,7 +67,18 @@
           <h2 id="customer-list-title">Your customers</h2>
           <p>Keep contact details and service locations close at hand.</p>
         </div>
-        <span class="customer-count">{{ customers.length }} total</span>
+        <span class="customer-count">{{ filteredCustomers.length }} total</span>
+      </div>
+
+      <div class="customer-search">
+        <label for="customer-search-input">Search customers</label>
+        <input
+          id="customer-search-input"
+          type="search"
+          [value]="searchTerm"
+          (input)="searchTerm = $any($event.target).value"
+          placeholder="Search by name, mobile or address"
+          autocomplete="off">
       </div>
 
       @if (loading) {
@@ -86,9 +97,14 @@
           <strong>No customers found</strong>
           <span>Add your first customer to start managing service records.</span>
         </div>
+      } @else if (filteredCustomers.length === 0) {
+        <div class="list-state empty-state">
+          <strong>No matching customers</strong>
+          <span>Try a different name, mobile number or address.</span>
+        </div>
       } @else {
         <div class="customer-list" role="list">
-          @for (customer of customers; track customer.id) {
+          @for (customer of filteredCustomers; track customer.id) {
             <article class="customer-item" role="listitem">
               <div class="customer-avatar" aria-hidden="true">{{ customer.name.charAt(0).toUpperCase() }}</div>
 

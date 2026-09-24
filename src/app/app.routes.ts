@@ -10,6 +10,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/customers/customers').then(m => m.Customers)
     },
     { path: 'extinguishers', loadComponent: () => import('./pages/extinguishers/extinguishers').then(m => m.Extinguishers) },
+    { path: 'extinguishers/:id', loadComponent: () => import('./pages/extinguishers/extinguisher-detail').then(m => m.ExtinguisherDetail) },
     { path: 'services', loadComponent: () => import('./pages/services/services').then(m => m.Services) },
     { path: 'notifications', loadComponent: () => import('./pages/notifications/notifications').then(m => m.Notifications) },
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },

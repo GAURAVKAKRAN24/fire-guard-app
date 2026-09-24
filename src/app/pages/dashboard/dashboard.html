@@ -9,10 +9,10 @@
       <p>Monitor your fire safety operations at a glance.</p>
     </div>
 
-    <button class="add-button">
+    <a class="add-button" routerLink="/services">
       <span>+</span>
       Add Service
-    </button>
+    </a>
   </div>
 
 
@@ -171,21 +171,21 @@
 
         <article class="customer-alert-card" *ngFor="let item of filteredAlerts">
           <div class="customer-identity">
-            <img [src]="item.image" [alt]="item.name"/>
+            <span class="extinguisher-alert-icon">🧯</span>
           </div>
 
           <div class="customer-details">
             <div class="customer-head">
-              <h3>{{ item.name }}</h3>
+              <h3>{{ item.extinguisher_no }}</h3>
               <!-- <span class="status-pill" [ngClass]="item.status === 'due' ? 'status-due' : 'status-upcoming'">
                 {{ item.status === 'due' ? 'Due' : 'Upcoming' }}
               </span> -->
             </div>
 
-            <p>{{ item.address }}</p>
+            <p>{{ item.customer?.name || 'Customer unavailable' }}</p>
 
             <div class="extinguisher-mini-list" aria-label="Extinguishers">
-              <span class="mini-extinguisher" *ngFor="let ext of [].constructor(item.count)">🧯</span>
+              <span>{{ item.type }} · {{ item.capacity }}</span>
             </div>
           </div>
 
@@ -195,7 +195,7 @@
               <!-- Call -->
               <a
                 class="call-btn"
-                [href]="getCallLink(item.phone)"
+                [href]="item.customer?.phone ? getCallLink(item.customer!.phone) : null"
                 aria-label="Call customer"
               >
                 <svg
@@ -227,7 +227,7 @@
               <!-- WhatsApp / Message -->
               <a
                 class="whatsapp-btn"
-                [href]="getWhatsAppLink(item.phone)"
+                [href]="item.customer?.phone ? getWhatsAppLink(item.customer!.phone) : null"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Send WhatsApp message"
@@ -249,17 +249,20 @@
 
             </div>
 
-            <button type="button" class="view-btn">
+            <a class="view-btn" [routerLink]="['/extinguishers', item.id]">
               View Extinguishers
-            </button>
+            </a>
           </div>
 
           <div class="customer-footer-note">
-            <span>{{ item.count }} Extinguishers | Next Service {{ item.dueDate|date: 'MMM d, y' }}</span>
+            <span>{{ getStatusLabel(item) }} | Next Service {{ item.next_service_date | date: 'MMM d, y' }}</span>
 
           </div>
         </article>
 
+        @if (filteredAlerts.length === 0) {
+          <div class="alert-empty">No due or upcoming extinguishers.</div>
+        }
       </div>
 
     </div>
@@ -270,88 +273,6 @@
   <!-- Bottom section -->
 
   <div class="dashboard-grid bottom-grid">
-
-
-    <!-- Due services -->
-
-    <div class="dashboard-card">
-
-      <div class="card-header">
-
-        <div>
-          <h2>Service Due</h2>
-          <p>Requires immediate attention</p>
-        </div>
-
-        <button class="view-all">View all →</button>
-
-      </div>
-
-      <div class="service-list">
-
-        <div class="service-row">
-
-          <div class="service-extinguisher">
-            <span class="ext-icon">🧯</span>
-            <div>
-              <strong>FE-001</strong>
-              <small>ABC · 4 KG</small>
-            </div>
-          </div>
-
-          <div class="service-customer">
-            <strong>Rajesh Kumar</strong>
-            <small>Jansath Road</small>
-          </div>
-
-          <span class="status due">Due</span>
-
-        </div>
-
-
-        <div class="service-row">
-
-          <div class="service-extinguisher">
-            <span class="ext-icon">🧯</span>
-            <div>
-              <strong>FE-014</strong>
-              <small>CO₂ · 5 KG</small>
-            </div>
-          </div>
-
-          <div class="service-customer">
-            <strong>Amit Sharma</strong>
-            <small>Khatauli</small>
-          </div>
-
-          <span class="status due">Due</span>
-
-        </div>
-
-
-        <div class="service-row">
-
-          <div class="service-extinguisher">
-            <span class="ext-icon">🧯</span>
-            <div>
-              <strong>FE-027</strong>
-              <small>ABC · 6 KG</small>
-            </div>
-          </div>
-
-          <div class="service-customer">
-            <strong>Anil Kumar</strong>
-            <small>Meerut Road</small>
-          </div>
-
-          <span class="status due">Due</span>
-
-        </div>
-
-      </div>
-
-    </div>
-
 
     <!-- Recent services -->
 
@@ -364,52 +285,32 @@
           <p>Latest service activity</p>
         </div>
 
-        <button class="view-all">View all →</button>
+        <a class="view-all" routerLink="/services">View all →</a>
 
       </div>
 
       <div class="recent-list">
 
-        <div class="recent-row">
+        @for (service of recentServices; track service.id) {
+          <div class="recent-row">
+            <div class="recent-icon">✓</div>
 
-          <div class="recent-icon">✓</div>
+            <div>
+              <strong>{{ service.service_type }} completed</strong>
+              <small>
+                {{ service.customer?.name || 'Customer unavailable' }} ·
+                {{ service.service_date | date: 'MMM d, y' }}
+              </small>
+              <small class="recent-address">
+                {{ service.customer?.address || 'No customer address provided' }}
+              </small>
+            </div>
 
-          <div>
-            <strong>FE-102 serviced</strong>
-            <small>Rajesh Kumar · Today</small>
+            <span>₹{{ service.amount }}</span>
           </div>
-
-          <span>₹450</span>
-
-        </div>
-
-
-        <div class="recent-row">
-
-          <div class="recent-icon">✓</div>
-
-          <div>
-            <strong>FE-087 serviced</strong>
-            <small>Vikas Traders · Yesterday</small>
-          </div>
-
-          <span>₹350</span>
-
-        </div>
-
-
-        <div class="recent-row">
-
-          <div class="recent-icon">✓</div>
-
-          <div>
-            <strong>FE-056 serviced</strong>
-            <small>Sharma Industries · 2 days ago</small>
-          </div>
-
-          <span>₹500</span>
-
-        </div>
+        } @empty {
+          <div class="empty-recent-services">No service records yet.</div>
+        }
 
       </div>
 

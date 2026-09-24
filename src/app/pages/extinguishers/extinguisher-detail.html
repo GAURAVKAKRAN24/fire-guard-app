@@ -1,0 +1,99 @@
+<main class="detail-page">
+  <a class="back-link" routerLink="/dashboard">← Back to dashboard</a>
+
+  @if (loading) {
+    <section class="detail-panel state" role="status">Loading extinguisher details...</section>
+  } @else if (error) {
+    <section class="detail-panel state error" role="alert">{{ error }}</section>
+  } @else if (extinguisher) {
+    <header class="detail-heading">
+      <div>
+        <span class="eyebrow">EXTINGUISHER DETAIL</span>
+        <h1>{{ extinguisher.extinguisher_no }}</h1>
+        <p>Individual asset information and service history.</p>
+      </div>
+      <span class="status-pill">{{ extinguisher.status }}</span>
+    </header>
+
+        <section class="detail-panel customer-summary">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">CUSTOMER DETAILS</span>
+          <h2>{{ customer?.name || 'Customer unavailable' }}</h2>
+        </div>
+      </div>
+
+      @if (customer) {
+        <div class="customer-details-grid">
+          <div class="summary-item">
+            <span>Mobile</span>
+            <a [href]="'tel:' + customer.phone">{{ customer.phone }}</a>
+          </div>
+          <div class="summary-item customer-address-item">
+            <span>Address</span>
+            <strong>{{ customer.address || 'No address provided' }}</strong>
+          </div>
+        </div>
+      } @else {
+        <div class="state">Customer details unavailable.</div>
+      }
+    </section>
+
+    <section class="detail-panel">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">EXTINGUISHER DETAILS</span>
+          <h2>Asset information</h2>
+        </div>
+      </div>
+
+      <div class="asset-summary">
+      <div class="summary-item">
+        <span>Type</span>
+        <strong>{{ extinguisher.type }}</strong>
+      </div>
+      <div class="summary-item">
+        <span>Capacity</span>
+        <strong>{{ extinguisher.capacity }}</strong>
+      </div>
+      <div class="summary-item">
+        <span>Purchase date</span>
+        <strong>{{ extinguisher.purchase_date | date: 'MMM d, y' }}</strong>
+      </div>
+      <div class="summary-item">
+        <span>Next service</span>
+        <strong>{{ extinguisher.next_service_date | date: 'MMM d, y' }}</strong>
+      </div>
+      </div>
+    </section>
+
+    <section class="detail-panel">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">SERVICE HISTORY</span>
+          <h2>Maintenance records <span>{{ services.length }}</span></h2>
+        </div>
+      </div>
+
+      <div class="service-history">
+        @for (service of services; track service.id) {
+          <article class="service-record">
+            <div>
+              <strong>{{ service.service_type }}</strong>
+              <span>{{ service.service_date | date: 'MMM d, y' }}</span>
+            </div>
+            <div>
+              <strong>₹{{ service.amount }}</strong>
+              <span>Next: {{ service.next_service_date | date: 'MMM d, y' }}</span>
+            </div>
+            @if (service.remarks) {
+              <p>{{ service.remarks }}</p>
+            }
+          </article>
+        } @empty {
+          <div class="state">No service history for this extinguisher.</div>
+        }
+      </div>
+    </section>
+  }
+</main>

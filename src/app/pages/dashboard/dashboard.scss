@@ -326,6 +326,9 @@
     box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
 }
 .view-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: none;
     background: #101828;
     color: #fff;
@@ -335,6 +338,7 @@
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
+    text-decoration: none;
 }
 .customer-footer-note {
     grid-area: footer;
@@ -385,6 +389,12 @@
     color: #999;
     font-size: 12px;
 }
+.recent-address {
+    max-width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .service-customer {
     flex: 1;
 }
@@ -417,12 +427,26 @@
     font-weight: 600;
     color: #555;
 }
+.alert-empty {
+    padding: 1.5rem 0;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+}
 .view-all {
+    display: inline-block;
     border: none;
     background: transparent;
     color: #e44b2b;
     font-size: 12px;
     cursor: pointer;
+    text-decoration: none;
+}
+.empty-recent-services {
+    padding: 1.5rem 0;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
 }
 @media (max-width: 1100px) {
     .stats-grid {

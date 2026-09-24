@@ -1,0 +1,168 @@
+.detail-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #e44b2b;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.detail-heading,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.eyebrow,
+.section-kicker {
+  color: #e44b2b;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.detail-heading h1 {
+  margin: 0.35rem 0;
+  color: #10213e;
+  font-size: 2rem;
+}
+
+.detail-heading p {
+  margin: 0;
+  color: #5e6b7e;
+}
+
+.status-pill {
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.detail-panel {
+  margin-top: 1.25rem;
+  border: 1px solid #e1e6ee;
+  border-radius: 14px;
+  background: #fff;
+  padding: 1.25rem;
+  box-shadow: 0 8px 20px rgba(18, 38, 68, 0.08);
+}
+
+.asset-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.summary-item {
+  min-width: 0;
+  border-radius: 0.65rem;
+  background: #f8fafc;
+  padding: 0.75rem;
+}
+
+.summary-item span,
+.service-record span {
+  display: block;
+  color: #94a3b8;
+  font-size: 0.7rem;
+}
+
+.summary-item strong {
+  display: block;
+  margin-top: 0.25rem;
+  color: #24334a;
+  font-size: 0.9rem;
+}
+
+.customer-details-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.customer-details-grid a {
+  display: block;
+  margin-top: 0.25rem;
+  color: #e44b2b;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.customer-address-item strong {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.section-heading h2 {
+  margin: 0.35rem 0 0;
+  color: #10213e;
+  font-size: 1.2rem;
+}
+
+.section-heading h2 span {
+  color: #e44b2b;
+  font-size: 0.85rem;
+}
+
+.service-history {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.service-record {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1rem;
+  border-top: 1px solid #f1f3f8;
+  padding-top: 0.85rem;
+}
+
+.service-record strong {
+  display: block;
+  color: #24334a;
+  font-size: 0.85rem;
+}
+
+.service-record p {
+  grid-column: 1 / -1;
+  margin: 0.35rem 0 0;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.state {
+  color: #64748b;
+  text-align: center;
+}
+
+.error {
+  color: #b91c1c;
+}
+
+@media (max-width: 640px) {
+  .detail-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .asset-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-details-grid {
+    grid-template-columns: 1fr;
+  }
+}

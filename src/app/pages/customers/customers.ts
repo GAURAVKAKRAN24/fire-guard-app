@@ -15,6 +15,7 @@ import { ConfirmationService } from '../../core/services/confirmation';
 export class Customers implements OnInit {
 
   customers: Customer[] = [];
+  searchTerm = '';
 
   loading = true;
   error = '';
@@ -44,6 +45,19 @@ if: any;
 
   ngOnInit(): void {
     this.loadCustomers();
+  }
+
+  get filteredCustomers(): Customer[] {
+    const searchTerm = this.searchTerm.trim().toLowerCase();
+
+    if (!searchTerm) {
+      return this.customers;
+    }
+
+    return this.customers.filter((customer) =>
+      [customer.name, customer.phone, customer.address ?? '']
+        .some((value) => value.toLowerCase().includes(searchTerm))
+    );
   }
 
   loadCustomers(): void {

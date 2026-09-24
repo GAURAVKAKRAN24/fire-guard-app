@@ -126,6 +126,36 @@
   }
 }
 
+.customer-search {
+  margin: 0 0 22px;
+}
+
+.customer-search label {
+  display: block;
+  margin-bottom: 8px;
+  color: #24334a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.customer-search input {
+  width: 100%;
+  min-height: 46px;
+  box-sizing: border-box;
+  border: 1px solid #d9e0ea;
+  border-radius: 9px;
+  padding: 0 14px;
+  background: #fff;
+  color: #24334a;
+  font: inherit;
+}
+
+.customer-search input:focus {
+  border-color: #df303d;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(223, 48, 61, 0.12);
+}
+
 /* =========================
    TABLE
 ========================= */
