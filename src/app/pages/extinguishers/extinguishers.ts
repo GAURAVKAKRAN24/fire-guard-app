@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterLink } from "@angular/router";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { CustomerService } from "../../core/services/customer";
 import { Customer } from "../../core/models/customer.model";
@@ -9,7 +10,7 @@ import { NotificationService } from "../../core/services/notification";
 @Component({
     selector: "app-extinguishers",
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, RouterLink],
     templateUrl: "./extinguishers.html",
     styleUrl: "./operations.scss",
 })

@@ -1,321 +1,338 @@
-<div class="dashboard">
+<div class="dashboard-page space-y-6">
 
-  <!-- Page heading -->
-
-  <div class="page-heading px-4">
+  <!-- Page Heading -->
+  <div class="page-heading flex flex-col md:flex-row md:items-end justify-between gap-4 px-2 sm:px-4">
     <div>
-      <span class="eyebrow">OVERVIEW</span>
-      <h1>Dashboard</h1>
-      <p>Monitor your fire safety operations at a glance.</p>
+      <span class="eyebrow">OPERATIONS & OVERVIEW</span>
+      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 mt-1">Dashboard</h1>
+      <p class="text-sm text-slate-500 mt-0.5">Monitor your fire safety operations, service due dates, and asset status at a glance.</p>
     </div>
 
-    <a class="add-button" routerLink="/services">
-      <span>+</span>
-      Add Service
-    </a>
+    <div class="flex items-center gap-2.5">
+      <a
+        routerLink="/services"
+        class="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-orange-700 focus:outline-none"
+      >
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        <span>Add Service</span>
+      </a>
+    </div>
   </div>
 
-
-  <!-- Summary cards -->
-
-  <div class="stats-grid px-4">
-
-    <div class="stat-card">
-
-      <div class="stat-top">
-        <div class="stat-icon customers-icon">👥</div>
-        <div class="stat-value">{{ dashboardSummary?.total_customers ?? 0 }}</div>
+  <!-- Summary KPI Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 px-2 sm:px-4">
+    
+    <!-- Customers Card -->
+    <div class="stat-card rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Customers</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
       </div>
-      <span class="stat-label">Customers</span>
-      <div class="stat-footer">
-        <span class="positive">↑ 8.2%</span>
-        <span>vs last month</span>
+      <div class="mt-2 flex items-baseline gap-2">
+        <span class="text-2xl font-bold text-slate-900">{{ dashboardSummary?.total_customers ?? 0 }}</span>
+        <span class="text-xs text-slate-500">registered</span>
       </div>
-
+      <div class="mt-2 flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
+        <span>Active client accounts</span>
+      </div>
     </div>
 
-
-    <div class="stat-card">
-
-      <div class="stat-top">
-        <div class="stat-icon extinguisher-icon">🧯</div>
-        <div class="stat-value">{{ dashboardSummary?.total_extinguishers ?? 0 }}</div>
+    <!-- Extinguishers Card -->
+    <div class="stat-card rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Extinguishers</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 3h6"/><path d="M10 3v4l-1 3h6l-1-3V3"/><path d="M8 10h8l1 9H7l1-9Z"/>
+          </svg>
+        </div>
       </div>
-      <span class="stat-label">Extinguishers</span>
+      <div class="mt-2 flex items-baseline gap-2">
+        <span class="text-2xl font-bold text-slate-900">{{ dashboardSummary?.total_extinguishers ?? 0 }}</span>
+        <span class="text-xs text-slate-500">total assets</span>
+      </div>
+      <div class="mt-2 flex items-center gap-1.5 text-xs text-slate-500">
+        <span>Monitored in inventory</span>
+      </div>
+    </div>
+
+    <!-- Service Due Card -->
+    <div class="stat-card rounded-2xl border border-red-200/80 bg-red-50/40 p-4 shadow-sm">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-red-700">Service Due</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-600">
+          <span class="relative flex h-3 w-3">
+            @if ((dashboardSummary?.due_extinguishers ?? 0) > 0) {
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+            }
+            <span class="relative inline-flex h-3 w-3 rounded-full bg-red-500"></span>
+          </span>
+        </div>
+      </div>
+      <div class="mt-2 flex items-baseline gap-2">
+        <span class="text-2xl font-bold text-red-600">{{ dashboardSummary?.due_extinguishers ?? 0 }}</span>
+        <span class="text-xs text-red-700">units overdue</span>
+      </div>
+      <div class="mt-2 flex items-center gap-1.5 text-xs text-red-600 font-medium">
+        <span>Action required immediately</span>
+      </div>
+    </div>
+
+    <!-- Upcoming Card -->
+    <div class="stat-card rounded-2xl border border-amber-200/80 bg-amber-50/40 p-4 shadow-sm">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-medium uppercase tracking-wider text-amber-800">Upcoming (30 Days)</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+          <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mt-2 flex items-baseline gap-2">
+        <span class="text-2xl font-bold text-amber-700">{{ dashboardSummary?.upcoming_extinguishers ?? 0 }}</span>
+        <span class="text-xs text-amber-800">due soon</span>
+      </div>
+      <div class="mt-2 flex items-center gap-1.5 text-xs text-amber-700">
+        <span>Scheduled in next 30 days</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Due & Upcoming Extinguishers Panel -->
+  <div class="px-2 sm:px-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm space-y-4">
       
-      <div class="stat-footer">
-        <span class="positive">↑ 5.4%</span>
-        <span>vs last month</span>
-      </div>
-
-    </div>
-
-
-    <div class="stat-card due-card">
-
-      <div class="stat-top">
-        <div class="stat-icon due-icon">!</div>
-        <div class="stat-value">{{ dashboardSummary?.due_extinguishers ?? 0 }}</div>
-      </div>
-      <span class="stat-label">Service Due</span>
-
-      <div class="stat-footer">
-        <span class="danger">Needs attention</span>
-      </div>
-
-    </div>
-
-
-    <div class="stat-card">
-
-      <div class="stat-top">
-        <div class="stat-icon upcoming-icon">◷</div>
-        <div class="stat-value">{{ dashboardSummary?.upcoming_extinguishers ?? 0 }}</div>
-      </div>
-      <span class="stat-label">Upcoming</span>
-      
-
-      <div class="stat-footer">
-        <span class="warning">Next 30 days</span>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- Main dashboard grid -->
-
-  <div class="dashboard-grid">
-
-
-    <!-- Service overview -->
-
-    <!-- <div class="dashboard-card service-overview">
-
-      <div class="card-header">
-
+      <!-- Section Header with Filters -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
-          <h2>Service Overview</h2>
-          <p>Monthly service activity</p>
+          <span class="eyebrow">SERVICE MONITORING</span>
+          <h2 class="text-lg font-bold text-slate-900 mt-0.5">Due & Upcoming Extinguishers</h2>
+          <p class="text-xs text-slate-500">Prioritize customer inspections based on scheduled maintenance.</p>
         </div>
 
-        <select>
-          <option>Last 6 months</option>
-          <option>Last 12 months</option>
-        </select>
+        <!-- Filter Tabs matching Notification -->
+        <div class="flex items-center gap-1.5 overflow-x-auto">
+          <button
+            type="button"
+            (click)="activeFilter = 'all'"
+            class="rounded-xl px-3.5 py-1.5 text-xs font-semibold transition whitespace-nowrap"
+            [ngClass]="activeFilter === 'all' ? 'bg-orange-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+          >
+            All ({{ customerAlerts.length }})
+          </button>
 
+          <button
+            type="button"
+            (click)="activeFilter = 'due'"
+            class="rounded-xl px-3.5 py-1.5 text-xs font-semibold transition whitespace-nowrap"
+            [ngClass]="activeFilter === 'due' ? 'bg-orange-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+          >
+            Due ({{ dashboardSummary?.due_extinguishers ?? 0 }})
+          </button>
+
+          <button
+            type="button"
+            (click)="activeFilter = 'upcoming'"
+            class="rounded-xl px-3.5 py-1.5 text-xs font-semibold transition whitespace-nowrap"
+            [ngClass]="activeFilter === 'upcoming' ? 'bg-orange-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+          >
+            Upcoming ({{ dashboardSummary?.upcoming_extinguishers ?? 0 }})
+          </button>
+        </div>
       </div>
 
-      <div class="chart-area">
+      <!-- Alerts List -->
+      <div class="space-y-3">
+        @for (item of filteredAlerts; track item.id) {
+          <div
+            class="rounded-2xl border transition-all duration-200 p-4 sm:p-5 relative overflow-hidden"
+            [ngClass]="item.status === 'due' ? 'border-red-200 bg-red-50/20 hover:border-red-300' : 'border-amber-200 bg-amber-50/20 hover:border-amber-300'"
+          >
+            <!-- Left accent strip -->
+            <span
+              class="absolute inset-y-0 left-0 w-1.5"
+              [ngClass]="item.status === 'due' ? 'bg-red-500' : 'bg-amber-500'"
+            ></span>
 
-        <div class="chart-bars">
-
-          <div class="bar-group">
-            <div class="bar bar-1"></div>
-            <span>Apr</span>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar bar-2"></div>
-            <span>May</span>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar bar-3"></div>
-            <span>Jun</span>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar bar-4"></div>
-            <span>Jul</span>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar bar-5"></div>
-            <span>Aug</span>
-          </div>
-
-          <div class="bar-group">
-            <div class="bar bar-6"></div>
-            <span>Sep</span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div> -->
-
-
-    <!-- Due / Upcoming customer cards -->
-
-    <div class="dashboard-card alert-panel">
-
-      <div class="card-header alert-header">
-
-        <div>
-          <h2>Due & Upcoming Extinguishers</h2>
-          <p>Customer service status overview</p>
-        </div>
-
-        <div class="filter-tabs" aria-label="Filter extinguishers">
-          <button type="button" [class.active]="activeFilter === 'all'" (click)="activeFilter = 'all'">All</button>
-          <button type="button" [class.active]="activeFilter === 'due'" (click)="activeFilter = 'due'">Due</button>
-          <button type="button" [class.active]="activeFilter === 'upcoming'" (click)="activeFilter = 'upcoming'">Upcoming</button>
-        </div>
-
-      </div>
-
-      <div class="alert-list">
-
-        <article class="customer-alert-card" *ngFor="let item of filteredAlerts">
-          <div class="customer-identity">
-            <span class="extinguisher-alert-icon">🧯</span>
-          </div>
-
-          <div class="customer-details">
-            <div class="customer-head">
-              <h3>{{ item.extinguisher_no }}</h3>
-              <!-- <span class="status-pill" [ngClass]="item.status === 'due' ? 'status-due' : 'status-upcoming'">
-                {{ item.status === 'due' ? 'Due' : 'Upcoming' }}
-              </span> -->
-            </div>
-
-            <p>{{ item.customer?.name || 'Customer unavailable' }}</p>
-
-            <div class="extinguisher-mini-list" aria-label="Extinguishers">
-              <span>{{ item.type }} · {{ item.capacity }}</span>
-            </div>
-          </div>
-
-          <div class="card-actions">
-            <div class="icon-actions">
-
-              <!-- Call -->
-              <a
-                class="call-btn"
-                [href]="item.customer?.phone ? getCallLink(item.customer!.phone) : null"
-                aria-label="Call customer"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.9"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              
+              <!-- Content -->
+              <div class="flex items-start gap-3.5">
+                <div
+                  class="flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-2xl shadow-sm"
+                  [ngClass]="item.status === 'due' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-700'"
                 >
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2
-                 19.8 19.8 0 0 1-8.63-3.07
-                 19.5 19.5 0 0 1-6-6
-                 A19.8 19.8 0 0 1 2.12 4.18
-                 2 2 0 0 1 4.11 2h3
-                 a2 2 0 0 1 2 1.72
-                 12.8 12.8 0 0 0 .7 2.81
-                 2 2 0 0 1-.45 2.11L8.09 9.91
-                 a16 16 0 0 0 6 6l1.27-1.27
-                 a2 2 0 0 1 2.11-.45
-                 12.8 12.8 0 0 0 2.81.7
-                 A2 2 0 0 1 22 16.92Z"
-                  />
-                </svg>
-              </a>
+                  <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 3h6"/><path d="M10 3v4l-1 3h6l-1-3V3"/><path d="M8 10h8l1 9H7l1-9Z"/>
+                  </svg>
+                </div>
 
-              <!-- WhatsApp / Message -->
-              <a
-                class="whatsapp-btn"
-                [href]="item.customer?.phone ? getWhatsAppLink(item.customer!.phone) : null"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Send WhatsApp message"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <h3 class="text-base font-bold text-slate-900">{{ item.extinguisher_no }}</h3>
+                    <span
+                      class="rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
+                      [ngClass]="item.status === 'due' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800'"
+                    >
+                      {{ item.status === 'due' ? 'Service Due' : 'Upcoming' }}
+                    </span>
+                  </div>
+
+                  <p class="text-sm font-semibold text-slate-800">
+                    {{ item.customer?.name || 'Customer unavailable' }}
+                  </p>
+
+                  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-600">
+                    <span class="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2.5 py-1 text-slate-700 font-medium">
+                      <span>{{ item.type }} · {{ item.capacity }}</span>
+                    </span>
+
+                    <span
+                      class="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 font-semibold"
+                      [ngClass]="item.status === 'due' ? 'bg-red-50 text-red-700 border border-red-200/60' : 'bg-amber-50 text-amber-800 border border-amber-200/60'"
+                    >
+                      <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                      <span>{{ getStatusLabel(item) }} · Due: {{ item.next_service_date | date: 'mediumDate' }}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="flex items-center gap-2 self-end sm:self-center">
+                @if (item.customer?.phone) {
+                  <!-- Phone Call -->
+                  <a
+                    [href]="getCallLink(item.customer!.phone)"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-orange-500 hover:text-orange-600"
+                    title="Call customer"
+                    aria-label="Call customer"
+                  >
+                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-2.12-4.18 2 2 0 0 1 4.11-2h3a2 2 0 0 1 2 1.72 12.8 12.8 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.8 12.8 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/>
+                    </svg>
+                  </a>
+
+                  <!-- WhatsApp -->
+                  <a
+                    [href]="getWhatsAppLink(item.customer!.phone)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300 bg-white text-emerald-600 shadow-sm transition hover:border-emerald-500 hover:bg-emerald-50"
+                    title="WhatsApp message"
+                    aria-label="Send WhatsApp message"
+                  >
+                    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L5 19l1-3.5A7.5 7.5 0 1 1 20 11.5Z"/>
+                      <path d="M9 9c.2-.5.5-.7.8-.7h.5l.8 1.8-.8.9c.5 1 1.3 1.8 2.3 2.3l.9-.8 1.8.8v.5c0 .3-.2.6-.7.8-1.5.5-4.7-1.9-5.6-3.6-.3-.6-.4-1.5 0-2Z"/>
+                    </svg>
+                  </a>
+                }
+
+                <a
+                  [routerLink]="['/extinguishers', item.id]"
+                  class="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-orange-600 focus:outline-none"
                 >
-                  <path d="M20 11.5a7.5 7.5 0 0 1-11.2 6.5L5 19l1-3.5A7.5 7.5 0 1 1 20 11.5Z"/>
-                  <path d="M9 9c.2-.5.5-.7.8-.7h.5l.8 1.8-.8.9c.5 1 1.3 1.8 2.3 2.3l.9-.8 1.8.8v.5c0 .3-.2.6-.7.8-1.5.5-4.7-1.9-5.6-3.6-.3-.6-.4-1.5 0-2Z"/>
-                </svg>
-              </a>
+                  <span>View Unit</span>
+                  <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
 
             </div>
-
-            <a class="view-btn" [routerLink]="['/extinguishers', item.id]">
-              View Extinguishers
-            </a>
-          </div>
-
-          <div class="customer-footer-note">
-            <span>{{ getStatusLabel(item) }} | Next Service {{ item.next_service_date | date: 'MMM d, y' }}</span>
-
-          </div>
-        </article>
-
-        @if (filteredAlerts.length === 0) {
-          <div class="alert-empty">No due or upcoming extinguishers.</div>
-        }
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- Bottom section -->
-
-  <div class="dashboard-grid bottom-grid">
-
-    <!-- Recent services -->
-
-    <div class="dashboard-card">
-
-      <div class="card-header">
-
-        <div>
-          <h2>Recent Services</h2>
-          <p>Latest service activity</p>
-        </div>
-
-        <a class="view-all" routerLink="/services">View all →</a>
-
-      </div>
-
-      <div class="recent-list">
-
-        @for (service of recentServices; track service.id) {
-          <div class="recent-row">
-            <div class="recent-icon">✓</div>
-
-            <div>
-              <strong>{{ service.service_type }} completed</strong>
-              <small>
-                {{ service.customer?.name || 'Customer unavailable' }} ·
-                {{ service.service_date | date: 'MMM d, y' }}
-              </small>
-              <small class="recent-address">
-                {{ service.customer?.address || 'No customer address provided' }}
-              </small>
-            </div>
-
-            <span>₹{{ service.amount }}</span>
           </div>
         } @empty {
-          <div class="empty-recent-services">No service records yet.</div>
+          <div class="rounded-2xl border border-dashed border-slate-300 bg-white py-12 px-6 text-center shadow-sm">
+            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 mb-2.5">
+              <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">All Units In Good Order</h3>
+            <p class="text-xs text-slate-500 mt-0.5">No extinguishers currently require due or upcoming maintenance under this filter.</p>
+          </div>
         }
-
       </div>
 
     </div>
+  </div>
 
+  <!-- Recent Services Section -->
+  <div class="px-2 sm:px-4">
+    <div class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm space-y-4">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <span class="eyebrow">ACTIVITY LOG</span>
+          <h2 class="text-lg font-bold text-slate-900 mt-0.5">Recent Services</h2>
+          <p class="text-xs text-slate-500">Latest completed maintenance records across all customer accounts.</p>
+        </div>
+
+        <a routerLink="/services" class="inline-flex items-center gap-1 text-xs font-semibold text-orange-600 hover:text-orange-700 transition">
+          <span>View all services</span>
+          <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="space-y-2.5">
+        @for (service of recentServices; track service.id) {
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50/50 p-3.5 hover:bg-slate-50 transition">
+            
+            <div class="flex items-start gap-3">
+              <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0 mt-0.5">
+                <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </div>
+
+              <div>
+                <p class="text-sm font-bold text-slate-900">{{ service.service_type }} completed</p>
+                <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 mt-0.5">
+                  <span class="font-medium text-slate-700">{{ service.customer?.name || 'Customer unavailable' }}</span>
+                  <span>&bull;</span>
+                  <span>{{ service.service_date | date: 'mediumDate' }}</span>
+                  @if (service.customer?.address) {
+                    <span>&bull;</span>
+                    <span class="truncate max-w-xs">{{ service.customer?.address }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="self-end sm:self-center">
+              <span class="inline-flex items-center rounded-lg bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 text-xs font-bold text-emerald-700">
+                ₹{{ service.amount }}
+              </span>
+            </div>
+
+          </div>
+        } @empty {
+          <div class="py-8 text-center text-xs text-slate-400">
+            No service records completed yet.
+          </div>
+        }
+      </div>
+
+    </div>
   </div>
 
 </div>
