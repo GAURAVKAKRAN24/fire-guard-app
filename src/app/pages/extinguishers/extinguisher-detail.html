@@ -1,12 +1,12 @@
 <main class="detail-page">
-  <a class="back-link" routerLink="/dashboard">← Back to dashboard</a>
+  <a class="back-link px-4" routerLink="/dashboard">← Back to dashboard</a>
 
   @if (loading) {
     <section class="detail-panel state" role="status">Loading extinguisher details...</section>
   } @else if (error) {
     <section class="detail-panel state error" role="alert">{{ error }}</section>
   } @else if (extinguisher) {
-    <header class="detail-heading">
+    <header class="detail-heading px-4">
       <div>
         <span class="eyebrow">EXTINGUISHER DETAIL</span>
         <h1>{{ extinguisher.extinguisher_no }}</h1>

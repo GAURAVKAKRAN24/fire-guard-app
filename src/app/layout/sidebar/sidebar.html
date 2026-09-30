@@ -60,7 +60,9 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2a2 2 0 0 1-.6 1.4L4 17h5"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
         </span>
         <span>Notifications</span>
-        <span class="notification-badge">3</span>
+        @if (unreadCount() > 0) {
+          <span class="notification-badge">{{ unreadCount() }}</span>
+        }
       </a>
     </div>
   </nav>
@@ -74,14 +76,20 @@
     </a>
 
     <div class="user-card">
-      <div class="avatar">G</div>
+      <div class="avatar">{{ userInitial() }}</div>
 
       <div class="user-info">
-        <strong>Gaurav</strong>
-        <span>Administrator</span>
+        <strong>{{ currentUser()?.name || 'Staff Member' }}</strong>
+        <span>{{ currentUser()?.role || 'Staff' }}</span>
       </div>
 
-      <button class="more-button" aria-label="More actions">⋮</button>
+      <button type="button" class="more-button hover:text-red-400 transition" (click)="logout()" title="Sign out" aria-label="Sign out">
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+      </button>
     </div>
   </div>
 </aside>
