@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../core/services/customer';
 import { Customer } from '../../core/models/customer.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,6 +17,7 @@ export class Customers implements OnInit {
 
   customers: Customer[] = [];
   searchTerm = '';
+  highlightCustomerId?: number;
 
   loading = true;
   error = '';
@@ -27,7 +29,8 @@ export class Customers implements OnInit {
   selectedCustomer: Customer | null = null;
 
   customerForm: FormGroup = new FormGroup({});
-if: any;
+  private route = inject(ActivatedRoute, { optional: true });
+
   constructor(
     private customerService: CustomerService,
     private cdr: ChangeDetectorRef,
@@ -45,6 +48,46 @@ if: any;
 
   ngOnInit(): void {
     this.loadCustomers();
+    if (this.route) {
+      this.route.queryParams.subscribe((params) => {
+        const searchParam = params['search'];
+        const idParam = params['id'];
+
+        if (searchParam) {
+          this.searchTerm = searchParam;
+        }
+
+        if (idParam) {
+          const id = Number(idParam);
+          this.highlightCustomerId = id;
+
+          if (id && !this.customers.some((c) => c.id === id)) {
+            this.customerService.getById(id).subscribe({
+              next: (customer) => {
+                if (customer && !this.customers.some((c) => c.id === customer.id)) {
+                  this.customers = [customer, ...this.customers];
+                  this.cdr.detectChanges();
+                  this.scrollToCustomer(id);
+                }
+              },
+              error: () => {}
+            });
+          } else if (id) {
+            this.scrollToCustomer(id);
+          }
+        }
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  private scrollToCustomer(id: number): void {
+    setTimeout(() => {
+      const el = document.getElementById(`customer-${id}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 200);
   }
 
   get filteredCustomers(): Customer[] {
@@ -61,36 +104,42 @@ if: any;
   }
 
   loadCustomers(): void {
-
     this.loading = true;
 
-    this.customerService.getCustomers().subscribe({
-
+    this.customerService.getCustomers(1, 100).subscribe({
       next: (response) => {
-
         console.log('Customers API response:', response);
-
-        this.customers = response.customers;
-
+        this.customers = response.customers || [];
         this.loading = false;
         this.error = '';
 
+        if (this.highlightCustomerId) {
+          const id = this.highlightCustomerId;
+          if (!this.customers.some((c) => c.id === id)) {
+            this.customerService.getById(id).subscribe({
+              next: (cust) => {
+                if (cust && !this.customers.some((c) => c.id === cust.id)) {
+                  this.customers = [cust, ...this.customers];
+                  this.cdr.detectChanges();
+                  this.scrollToCustomer(id);
+                }
+              }
+            });
+          } else {
+            this.scrollToCustomer(id);
+          }
+        }
+
         this.cdr.detectChanges();
       },
-
       error: (error) => {
-
         console.error('Customers API error:', error);
-
         this.error = 'Unable to load customers';
         this.notificationService.error('Unable to load customers. Please try again.');
         this.loading = false;
-
         this.cdr.detectChanges();
       }
-
     });
-
   }
 
   addCustomer(): void {
