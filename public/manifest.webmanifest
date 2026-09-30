@@ -1,0 +1,9 @@
+{
+  "name": "Fire Guard",
+  "short_name": "Fire Guard",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}
